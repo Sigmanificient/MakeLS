@@ -1,0 +1,16 @@
+# Python
+venv
+
+## cache
+__pycache__
+*.py[cod]
+
+## Packaging
+*egg-info
+
+# Nix
+result
+
+## direnv
+.direnv
+.envrc
