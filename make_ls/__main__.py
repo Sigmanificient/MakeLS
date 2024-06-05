@@ -1,4 +1,5 @@
 import argparse
+import logging
 import sys
 
 from . import __version__
@@ -6,6 +7,7 @@ from . import __version__
 from typing import Final
 
 from loguru import logger
+from loguru_logging_intercept import setup_loguru_logging_intercept
 
 EXIT_SUCCESS: Final[int] = 0
 LOG_PAD: Final[int] = 8
@@ -17,6 +19,10 @@ LOG_FORMAT: Final[str] = (
 
 
 def main() -> int:
+    setup_loguru_logging_intercept(
+        level=logging.DEBUG, modules="pygls"
+    )
+
     logger.remove()
     logger.add(
         sys.stderr,

@@ -63,12 +63,22 @@
       });
 
     packages = forAllSystems (pkgs: let
+      pkgs' = self.packages.${pkgs.system};
       pypkgs = pkgs.python310.pkgs;
     in {
       default = self.packages.${pkgs.system}.make_ls;
       make_ls =
         pypkgs.callPackage ./make_ls.nix
-        {};
+        {inherit (pkgs') loguru-logging-intercept;};
+
+      loguru-logging-intercept =
+        pypkgs.callPackage
+        ./loguru-logging-intercept.nix {
+          loguru = pypkgs.loguru.overrideAttrs (prev: {
+            # loguru tests takes a full minute to run
+            doCheck = false;
+          });
+        };
     });
   };
 }

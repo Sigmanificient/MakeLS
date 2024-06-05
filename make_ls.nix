@@ -4,6 +4,7 @@
   setuptools,
   pygls,
   loguru,
+  loguru-logging-intercept,
 }:
 buildPythonPackage {
   pname = "make_ls";
@@ -13,7 +14,7 @@ buildPythonPackage {
   src = ./.;
 
   build-system = [setuptools];
-  dependencies = [pygls loguru];
+  dependencies = [pygls loguru loguru-logging-intercept];
 
   pythonImportsCheck = ["make_ls"];
 
