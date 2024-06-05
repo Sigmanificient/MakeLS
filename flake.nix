@@ -33,7 +33,7 @@
         enable = true;
         name = "commit name";
         entry = ''
-          ${pkgs.python310.interpreter} ${./check_commit_msg_format.py}
+          ${pkgs.python310.interpreter} ${./check_commit_msg.py}
         '';
 
         stages = ["commit-msg"];
@@ -54,13 +54,16 @@
       };
     });
 
-    devShells.default = forAllSystems (pkgs:
-      pkgs.mkShell {
+    devShells = forAllSystems (pkgs: {
+      default = pkgs.mkShell {
+        inherit (self.checks.${pkgs.system}.pre-commit-check) shellHook;
+
         packages = with pkgs; [
           python310
           black
         ];
-      });
+      };
+    });
 
     packages = forAllSystems (pkgs: let
       pkgs' = self.packages.${pkgs.system};
