@@ -62,9 +62,13 @@
         ];
       });
 
-    packages = forAllSystems (pkgs: {
+    packages = forAllSystems (pkgs: let
+      pypkgs = pkgs.python310.pkgs;
+    in {
       default = self.packages.${pkgs.system}.make_ls;
-      make_ls = pkgs.python310.pkgs.callPackage ./make_ls.nix { };
+      make_ls =
+        pypkgs.callPackage ./make_ls.nix
+        {};
     });
   };
 }

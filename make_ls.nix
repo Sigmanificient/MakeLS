@@ -3,8 +3,8 @@
   buildPythonPackage,
   setuptools,
   pygls,
+  loguru,
 }:
-
 buildPythonPackage {
   pname = "make_ls";
   version = "0.0.1";
@@ -12,14 +12,14 @@ buildPythonPackage {
 
   src = ./.;
 
-  build-system = [ setuptools ];
-  dependencies = [ pygls ];
+  build-system = [setuptools];
+  dependencies = [pygls loguru];
 
-  pythonImportsCheck = [ "make_ls" ];
+  pythonImportsCheck = ["make_ls"];
 
   meta = with lib; {
     description = "Language Server for Make(file)";
-    maintainers = with maintainers; [ sigmanificient ];
+    maintainers = with maintainers; [sigmanificient];
     mainProgram = "make_ls";
   };
 }
